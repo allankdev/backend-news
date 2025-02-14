@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model Reader {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  openings  Opening[]
+  streaks   Streak[]
+}
+
+model Newsletter {
+  id          Int      @id @default(autoincrement())
+  resourceId  String   @unique
+  publishedAt DateTime @default(now())
+  openings    Opening[]
+}
+
+model Opening {
+  id           Int        @id @default(autoincrement())
+  readerId     Int
+  newsletterId Int
+  openedAt     DateTime   @default(now())
+  reader       Reader     @relation(fields: [readerId], references: [id])
+  newsletter   Newsletter @relation(fields: [newsletterId], references: [id])
+}
+
+model Streak {
+  id            Int      @id @default(autoincrement())
+  readerId      Int
+  currentStreak Int      @default(0)
+  longestStreak Int      @default(0)
+  lastOpenedAt  DateTime
+  reader        Reader   @relation(fields: [readerId], references: [id])
+}
