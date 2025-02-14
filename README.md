@@ -42,38 +42,36 @@ Este é o repositório do backend do projeto **Gamificação em The News**, dese
    ```bash
    git clone https://github.com/allankdev/backend-news.git
    cd backend-news
+   ```
 
+2. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
 
+3. **Configure o banco de dados:**
+   
+   Crie um arquivo `.env` na raiz do projeto e adicione:
+   ```plaintext
+   DATABASE_URL="postgresql://user:password@localhost:5432/backend-news?schema=public"
+   ```
+   Substitua `user`, `password` e `backend-news` pelas suas credenciais.
 
-   Instale as dependências:
+4. **Suba o banco de dados com Docker (opcional):**
+   ```bash
+   docker-compose up -d
+   ```
 
-bash
-Copy
-npm install
-Configure o banco de dados:
+5. **Execute as migrações do Prisma:**
+   ```bash
+   npx prisma migrate dev --name init
+   ```
 
-Crie um arquivo .env na raiz do projeto e adicione:
+6. **Rode o servidor:**
+   ```bash
+   npm run start:dev
+   ```
 
-plaintext
-Copy
-DATABASE_URL="postgresql://user:password@localhost:5432/backend-news?schema=public"
-Substitua user, password e backend-news pelas suas credenciais.
+7. **Acesse a API:**
+   O servidor estará rodando em [http://localhost:3000](http://localhost:3000).
 
-Suba o banco de dados com Docker (opcional):
-
-bash
-Copy
-docker-compose up -d
-Execute as migrações do Prisma:
-
-bash
-Copy
-npx prisma migrate dev --name init
-Rode o servidor:
-
-bash
-Copy
-npm run start:dev
-Acesse a API:
-
-O servidor estará rodando em http://localhost:3000.
