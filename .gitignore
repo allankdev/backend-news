@@ -1,0 +1,12 @@
+# Ignorar a pasta de build
+dist/
+
+# Ignorar arquivos de mapeamento
+*.js.map
+
+# Opcional: ignorar quaisquer .js na pasta src (caso compile TS -> JS no mesmo lugar)
+src/**/*.js
+src/**/*.js.map
+
+# Outros arquivos temporários
+node_modules/
