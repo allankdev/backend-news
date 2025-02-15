@@ -1,14 +1,21 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { WebhooksModule } from './webhooks/webhooks.module';
+import { StreaksModule } from './streaks/streaks.module';
 import { ReadersModule } from './readers/readers.module';
 import { NewslettersModule } from './newsletters/newsletters.module';
-import { StreaksModule } from './streaks/streaks.module';
-import { PrismaService } from './prisma/prisma.service';
+import { BadgesModule } from './badges/ badges.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [ReadersModule, NewslettersModule, StreaksModule],
-  controllers: [AppController],
-  providers: [AppService, PrismaService],
+  imports: [
+    PrismaModule,
+    AuthModule,
+    WebhooksModule,
+    StreaksModule,
+    ReadersModule,
+    NewslettersModule,
+    BadgesModule
+  ],
 })
 export class AppModule {}

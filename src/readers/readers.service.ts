@@ -5,7 +5,23 @@ import { PrismaService } from '../prisma/prisma.service';
 export class ReadersService {
   constructor(private prisma: PrismaService) {}
 
-  async getReader(email: string) {
-    return this.prisma.reader.findUnique({ where: { email } });
+  async getMyData(userId: string) {
+    return this.prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        email: true,
+        streak: true,
+        lastOpened: true,
+        createdAt: true,
+        updatedAt: true
+      },
+    });
+  }
+
+  async getMyNewsletters(userId: string) {
+    return this.prisma.newsletter.findMany({
+      where: { userId },
+      orderBy: { openedAt: 'desc' },
+    });
   }
 }
