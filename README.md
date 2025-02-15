@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Backend News 🚀
 
 Este é o repositório do backend do projeto **Gamificação em The News**, desenvolvido com **NestJS** e **Prisma**. O objetivo é criar uma plataforma para gamificar a leitura de newsletters, premiando leitores que mantêm uma sequência de aberturas.
@@ -89,4 +88,3 @@ Este projeto é um exemplo de uma plataforma de gamificação usando:
 1. Instale as dependências:
    ```bash
    npm install
->>>>>>> fix/auth-me-endpoints
