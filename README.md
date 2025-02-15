@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Backend News 🚀
 
 Este é o repositório do backend do projeto **Gamificação em The News**, desenvolvido com **NestJS** e **Prisma**. O objetivo é criar uma plataforma para gamificar a leitura de newsletters, premiando leitores que mantêm uma sequência de aberturas.
@@ -75,3 +76,17 @@ Este é o repositório do backend do projeto **Gamificação em The News**, dese
 7. **Acesse a API:**
    O servidor estará rodando em [http://localhost:3000](http://localhost:3000).
 
+=======
+# Newsletter Streak System
+
+Este projeto é um exemplo de uma plataforma de gamificação usando:
+- **NestJS** (framework Node.js)
+- **Prisma** (ORM)
+- **PostgreSQL** (Banco de dados)
+
+## Configuração
+
+1. Instale as dependências:
+   ```bash
+   npm install
+>>>>>>> fix/auth-me-endpoints
