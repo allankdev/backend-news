@@ -6,6 +6,8 @@ import { ReadersModule } from './readers/readers.module';
 import { NewslettersModule } from './newsletters/newsletters.module';
 import { BadgesModule } from './badges/ badges.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { AdminModule } from './admin/admin.module';
+
 
 @Module({
   imports: [
@@ -15,7 +17,8 @@ import { PrismaModule } from './prisma/prisma.module';
     StreaksModule,
     ReadersModule,
     NewslettersModule,
-    BadgesModule
+    BadgesModule,
+    AdminModule
   ],
 })
 export class AppModule {}
