@@ -1,7 +1,7 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/ jwt-auth.guard'; // 🔹 REMOVIDO ESPAÇO EXTRA
+import { JwtAuthGuard } from '../auth/ jwt-auth.guard';
 import { RoleGuard } from '../auth/role.guard';
 
 @ApiTags('Admin')

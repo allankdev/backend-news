@@ -2,8 +2,12 @@ import { Body, Controller, Get, Post, UseGuards, Request } from '@nestjs/common'
 import { BadgesService } from './badges.service';
 import { AwardBadgeDto } from './badges.dto';
 import { JwtAuthGuard } from '../auth/ jwt-auth.guard';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+
 
 @Controller('badges')
+@ApiTags('Badges')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class BadgesController {
   constructor(private readonly badgesService: BadgesService) {}

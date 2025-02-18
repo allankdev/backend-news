@@ -1,8 +1,11 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards, Request, UnauthorizedException } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './auth.dto';
 import { JwtAuthGuard } from './ jwt-auth.guard';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -19,8 +22,14 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('me')
-  async me() {
-    // Se chegou aqui, o usuário está autenticado e seu ID está em req.user
-    return { message: 'Usuário autenticado, retornaria dados aqui...' };
+  async me(@Request() req) {
+    console.log('🔹 Token decodificado no request:', req.user);
+
+    if (!req.user || !req.user.sub) {
+      console.error('❌ Nenhum usuário autenticado no request!');
+      throw new UnauthorizedException('Usuário não autenticado.');
+    }
+
+    return this.authService.getUserById(req.user.sub);
   }
 }
