@@ -1,4 +1,3 @@
-// auth.service.ts
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
@@ -49,28 +48,25 @@ export class AuthService {
   }
 
   async getUserById(userId: string) {
-  console.log('🔹 Buscando usuário no banco com ID:', userId);
+    console.log('🔹 Buscando usuário no banco com ID:', userId);
 
-  const user = await this.prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      id: true,
-      email: true,
-      role: true,
-      streak: true,
-      lastOpened: true,
-      createdAt: true,
-    },
-  });
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        streak: true,
+        lastOpened: true,
+        createdAt: true,
+      },
+    });
 
-  if (!user) {
-    console.error('❌ Usuário não encontrado!');
-    throw new UnauthorizedException('Usuário não encontrado.');
+    if (!user) {
+      console.error('❌ Usuário não encontrado!');
+      throw new UnauthorizedException('Usuário não encontrado.');
+    }
+
+    return user;
   }
-
-  return user;
-}
-
-
-  
 }

@@ -25,11 +25,13 @@ export class AuthController {
   async me(@Request() req) {
     console.log('🔹 Token decodificado no request:', req.user);
 
-    if (!req.user || !req.user.sub) {
+    // Como o JwtStrategy retorna { userId: payload.sub, role: payload.role },
+    // devemos utilizar req.user.userId
+    if (!req.user || !req.user.userId) {
       console.error('❌ Nenhum usuário autenticado no request!');
       throw new UnauthorizedException('Usuário não autenticado.');
     }
 
-    return this.authService.getUserById(req.user.sub);
+    return this.authService.getUserById(req.user.userId);
   }
 }
