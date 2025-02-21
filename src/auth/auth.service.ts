@@ -25,6 +25,7 @@ export class AuthService {
       data: {
         email,
         password: hashed,
+        role: 'user', // 🔹 Garante que o usuário normal tem role "user"
       },
     });
 
@@ -34,18 +35,16 @@ export class AuthService {
   async login(dto: LoginDto) {
     const { email, password } = dto;
     const user = await this.prisma.user.findUnique({ where: { email } });
+
     if (!user) throw new UnauthorizedException('Credenciais inválidas');
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) throw new UnauthorizedException('Credenciais inválidas');
 
-    // Gera token JWT
-    const token = this.jwtService.sign({ sub: user.id });
-    return { token };
-  }
+    // 🔹 Agora o token inclui a role do usuário
+    const token = this.jwtService.sign({ sub: user.id, role: user.role });
 
-  async validateUser(userId: string) {
-    const user = await this.prisma.user.findUnique({ where: { id: userId } });
-    return user || null;
+    console.log('✅ Token gerado:', token); // 🔍 DEBUG
+    return { token };
   }
 }

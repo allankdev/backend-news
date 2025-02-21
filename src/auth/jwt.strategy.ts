@@ -1,22 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { AuthService } from './auth.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private authService: AuthService) {
+  constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET || 'SECRET_KEY_EXAMPLE',
+      secretOrKey: process.env.JWT_SECRET || 'minha-chave-secreta',
     });
   }
 
   async validate(payload: any) {
-    // payload.sub = userId
-    const user = await this.authService.validateUser(payload.sub);
-    if (!user) return null;
-    return user; // injeta em req.user
+    console.log('🔹 Token decodificado no JwtStrategy:', payload); // 🔍 DEBUG
+
+    if (!payload || !payload.sub) {
+      console.error('❌ Erro: Payload JWT inválido.');
+      throw new UnauthorizedException('Token JWT inválido.');
+    }
+
+    if (!payload.role) {
+      console.error('❌ Erro: Role não encontrada no token.');
+      throw new UnauthorizedException('Token JWT inválido.');
+    }
+
+    return { userId: payload.sub, role: payload.role };
   }
 }
