@@ -121,7 +121,7 @@ JWT_SECRET=super_secret_key
 - **Responsividade e experiência do usuário**
 
 ## 📽 Demonstração
-📌 **[Inserir link do vídeo de demonstração aqui]**
+📌 **https://youtu.be/rob-d3wvmdk?si=Ls4WAKsdLugO-KJF**
 
 ## 🔍 Melhorias Futuras
 - Implementar **notificações push** para lembrar os usuários de abrir a newsletter
