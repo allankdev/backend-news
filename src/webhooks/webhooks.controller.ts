@@ -1,20 +1,22 @@
-import { Body, Controller, Post, Headers, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Query, BadRequestException } from '@nestjs/common';
 import { WebhooksService } from './webhooks.service';
-import { BeehiivWebhookDto } from './webhooks.dto';
 
-@Controller('webhooks')
+@Controller()
 export class WebhooksController {
   constructor(private readonly webhooksService: WebhooksService) {}
 
-  @Post('beehiiv')
-  async handleBeehiiv(
-    @Headers('x-beehiiv-signature') signature: string, // 🛑 Captura o token do header
-    @Body() data: BeehiivWebhookDto
+  // ✅ Webhook para processar as aberturas do The News (sem autenticação)
+  @Get()
+  async handleTheNewsWebhook(
+    @Query('email') email: string,
+    @Query('id') id?: string
   ) {
-    if (process.env.BEEHIIV_WEBHOOK_SECRET && signature !== process.env.BEEHIIV_WEBHOOK_SECRET) {
-      throw new UnauthorizedException('Webhook não autorizado'); // ❌ Bloqueia requisições inválidas
+    console.log(`📩 Webhook recebido: email=${email}, id=${id}`);
+
+    if (!email) {
+      throw new BadRequestException('O campo "email" é obrigatório!');
     }
 
-    return this.webhooksService.processBeehiivWebhook(data);
+    return this.webhooksService.processBeehiivWebhook({ email, id });
   }
 }
