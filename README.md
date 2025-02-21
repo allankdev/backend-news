@@ -1,90 +1,138 @@
-# Backend News 🚀
+# 📩 The News - Gamificação de Newsletters
 
-Este é o repositório do backend do projeto **Gamificação em The News**, desenvolvido com **NestJS** e **Prisma**. O objetivo é criar uma plataforma para gamificar a leitura de newsletters, premiando leitores que mantêm uma sequência de aberturas.
+## 🚀 Sobre o Projeto
+O **The News** é uma plataforma de **gamificação para newsletters**, incentivando o engajamento dos leitores através de **streaks, badges e rankings**. Inspirado no **Duolingo**, o sistema permite que os usuários acompanhem seu progresso e conquistas enquanto leem as newsletters enviadas regularmente.
+
+## 🎯 Funcionalidades
+### ✅ **Área do Usuário**
+- **Página Inicial** com introdução ao projeto e botão para login
+- **Dashboard do Usuário** exibindo:
+  - Streak atual (quantos dias consecutivos abriu a newsletter)
+  - Histórico de leituras e progresso
+  - Mensagens motivacionais para incentivar o usuário
+  - Conquistas e Badges
+
+### ✅ **Dashboard Administrativo**
+- Visualização de **métricas de engajamento geral**
+- **Ranking** dos leitores mais engajados
+- **Filtros avançados** por período, newsletter e status de streak
+- **Gráficos de padrões de engajamento**
+
+### ✅ **Regras de Streak e Badges**
+- Streak aumenta **+1 a cada dia consecutivo** que o usuário abrir uma newsletter
+- Se o usuário perder um dia, o streak é **zerado** (exceto domingos)
+- Badges são concedidos ao atingir **3, 7, 14, 30 dias de streak**
+
+## 🛠 Tecnologias Utilizadas
+- **Frontend**: Next.js, Tailwind CSS, shadcn/ui, Recharts
+- **Backend**: NestJS, Prisma ORM, PostgreSQL
+- **Autenticação**: JWT
+- **Webhook**: Beehiiv API para rastrear aberturas de emails
+
+## 🏗 Estrutura do Projeto
+```
+📂 backend/
+├── src/
+│   ├── auth/                  # Módulo de autenticação
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   ├── jwt-auth.guard.ts
+│   │   ├── jwt.strategy.ts
+│   │   ├── auth.dto.ts        # DTOs para login e registro
+│   │   └── auth.module.ts
+│   ├── badges/                # Módulo de badges (conquistas)
+│   │   ├── badges.controller.ts
+│   │   ├── badges.service.ts
+│   │   ├── badges.module.ts
+│   │   └── badges.dto.ts      # DTOs para badges
+│   ├── readers/               # Módulo de leitores
+│   │   ├── readers.controller.ts
+│   │   ├── readers.service.ts
+│   │   ├── readers.module.ts
+│   │   └── readers.dto.ts     # DTOs para leitores
+│   ├── newsletters/           # Módulo de newsletters
+│   │   ├── newsletters.controller.ts
+│   │   ├── newsletters.service.ts
+│   │   ├── newsletters.module.ts
+│   │   └── newsletters.dto.ts # DTOs para newsletters
+│   ├── streaks/               # Módulo de streaks (sequências de leitura)
+│   │   ├── streaks.controller.ts
+│   │   ├── streaks.service.ts
+│   │   ├── streaks.module.ts
+│   │   └── streaks.dto.ts     # DTOs para streaks
+│   ├── webhooks/              # Módulo de webhooks
+│   │   ├── webhooks.controller.ts
+│   │   ├── webhooks.service.ts
+│   │   ├── webhooks.module.ts
+│   │   └── webhooks.dto.ts    # DTOs para webhooks
+│   ├── prisma/                # Configuração do Prisma
+│   │   ├── prisma.service.ts  # Serviço do Prisma
+│   │   └── prisma.module.ts   # Módulo do Prisma
+│   ├── utils/                 # Utilitários
+│   │   ├── validation.utils.ts
+│   │   ├── date.utils.ts
+│   │   └── logger.utils.ts    # Logging centralizado
+│   ├── app.module.ts          # Módulo principal
+│   └── main.ts                # Ponto de entrada
+├── prisma/
+│   ├── migrations/            # Migrações do banco de dados
+│   ├── schema.prisma          # Schema do Prisma
+│   └── seed.ts                # Seed para dados iniciais
+├── tests/                     # Testes automatizados
+│   ├── unit/                  # Testes unitários
+│   └── e2e/                   # Testes de integração
+├── .env                       # Variáveis de ambiente
+├── .env.example               # Template de variáveis de ambiente
+├── docker-compose.yml         # Configuração do Docker
+├── package.json               # Dependências do projeto
+├── tsconfig.json              # Configuração do TypeScript
+└── README.md                  # Documentação do projeto
+```
+
+## 🔧 Como Rodar o Projeto
+### **1️⃣ Configurar o Backend**
+```sh
+cd backend-news
+npm install
+npm run start
+```
+Certifique-se de que o backend está rodando em **http://localhost:3000**
+
+### **2️⃣ Rodar o Frontend**
+```sh
+cd frontend-news
+npm install
+npm run dev
+```
+O frontend rodará em **http://localhost:4000**
+
+## 🌍 Variáveis de Ambiente (.env.local)
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+NEXTAUTH_URL=http://localhost:4000
+JWT_SECRET=super_secret_key
+```
+
+## ✅ Testes Realizados
+- **Autenticação e redirecionamento correto de usuários**
+- **Incremento e reset de streaks conforme regras**
+- **Recebimento de dados via webhook do Beehiiv**
+- **Exibição correta dos badges e ranking**
+- **Responsividade e experiência do usuário**
+
+## 📽 Demonstração
+📌 **[Inserir link do vídeo de demonstração aqui]**
+
+## 🔍 Melhorias Futuras
+- Implementar **notificações push** para lembrar os usuários de abrir a newsletter
+- Criar **mecânica de desafios e missões diárias**
+- Permitir **customização de avatares e perfis**
+
+## 📦 Entrega
+- ✅ Código-fonte no **GitHub (repositório privado)**
+- ✅ Demonstração funcional **(vídeo ou link hospedado)**
+- ✅ Relatório de análise técnica
 
 ---
+Feito com ❤️ por **[Allan Kelven]** 🚀
 
-## **Tecnologias Utilizadas**
-
-- **Backend:** NestJS, TypeScript, Prisma (ORM), PostgreSQL
-- **Ferramentas:** Docker, Git, GitHub Actions (CI/CD)
-- **Testes:** Jest (unitários e integração)
-
----
-
-## **Funcionalidades**
-
-### **Módulo de Leitores**
-- CRUD de leitores.
-- Consulta de streaks (sequência de leituras).
-- Histórico de aberturas de newsletters.
-
-### **Módulo de Newsletters**
-- CRUD de newsletters.
-- Registro de aberturas por leitor.
-
-### **Módulo de Streaks**
-- Cálculo de streaks (dias consecutivos de leitura).
-- Atualização automática do streak ao abrir uma newsletter.
-
----
-
-## **Como Rodar o Projeto**
-
-### **Pré-requisitos**
-- Node.js (v18 ou superior)
-- Docker (opcional, para rodar o banco de dados)
-- Git
-
-### **Passo a Passo**
-
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/allankdev/backend-news.git
-   cd backend-news
-   ```
-
-2. **Instale as dependências:**
-   ```bash
-   npm install
-   ```
-
-3. **Configure o banco de dados:**
-   
-   Crie um arquivo `.env` na raiz do projeto e adicione:
-   ```plaintext
-   DATABASE_URL="postgresql://user:password@localhost:5432/backend-news?schema=public"
-   ```
-   Substitua `user`, `password` e `backend-news` pelas suas credenciais.
-
-4. **Suba o banco de dados com Docker (opcional):**
-   ```bash
-   docker-compose up -d
-   ```
-
-5. **Execute as migrações do Prisma:**
-   ```bash
-   npx prisma migrate dev --name init
-   ```
-
-6. **Rode o servidor:**
-   ```bash
-   npm run start:dev
-   ```
-
-7. **Acesse a API:**
-   O servidor estará rodando em [http://localhost:3000](http://localhost:3000).
-
-=======
-# Newsletter Streak System
-
-Este projeto é um exemplo de uma plataforma de gamificação usando:
-- **NestJS** (framework Node.js)
-- **Prisma** (ORM)
-- **PostgreSQL** (Banco de dados)
-
-## Configuração
-
-1. Instale as dependências:
-   ```bash
-   npm install
