@@ -10,20 +10,27 @@ async function bootstrap() {
 
   // 🔥 Habilita CORS para permitir comunicação com o frontend
   const allowedOrigins = [
-    process.env.FRONTEND_URL || 'http://localhost:4000',
+    'https://frontend-news-seven.vercel.app', // 🔥 Domínio fixo da Vercel
+    'http://localhost:3000', // 🔥 Para desenvolvimento local
   ];
-
-  // Se existir um domínio temporário da Vercel, adiciona na lista
+  
+  // Se houver um domínio temporário da Vercel, adiciona na lista
   if (process.env.FRONTEND_TEMPORARY_URL) {
     allowedOrigins.push(process.env.FRONTEND_TEMPORARY_URL);
   }
-
+  
   app.enableCors({
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
-
   // 📌 Configuração do Swagger
   const config = new DocumentBuilder()
     .setTitle('API Documentation')
