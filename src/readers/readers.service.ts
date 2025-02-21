@@ -5,23 +5,41 @@ import { PrismaService } from '../prisma/prisma.service';
 export class ReadersService {
   constructor(private prisma: PrismaService) {}
 
-  async getMyData(userId: string) {
-    return this.prisma.user.findUnique({
+  async getMyNewsletters(userId: string) {
+    console.log('🔹 Buscando dados do usuário com ID:', userId);
+
+    if (!userId) {
+      console.error('❌ ID do usuário está indefinido!');
+      throw new Error('ID do usuário inválido.');
+    }
+
+    const user = await this.prisma.user.findUnique({
       where: { id: userId },
       select: {
-        email: true,
+        id: true, // Adiciona ID para verificar se o usuário existe
         streak: true,
         lastOpened: true,
-        createdAt: true,
-        updatedAt: true
+        newsletters: {
+          select: {
+            id: true,
+            resourceId: true,
+            openedAt: true,
+          },
+        },
       },
     });
-  }
 
-  async getMyNewsletters(userId: string) {
-    return this.prisma.newsletter.findMany({
-      where: { userId },
-      orderBy: { openedAt: 'desc' },
-    });
+    if (!user) {
+      console.error('❌ Nenhum usuário encontrado no banco de dados!');
+      return { error: 'Usuário não encontrado.' };
+    }
+
+    console.log('✅ Usuário encontrado:', user);
+    return {
+      id: user.id,
+      streak: user.streak,
+      lastOpened: user.lastOpened,
+      newsletters: user.newsletters,
+    };
   }
 }

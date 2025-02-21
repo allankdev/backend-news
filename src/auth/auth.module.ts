@@ -1,3 +1,4 @@
+// auth.module.ts
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -9,7 +10,7 @@ import { JwtStrategy } from './jwt.strategy';
 @Module({
   imports: [
     PassportModule,
-    PrismaModule, // ✅ Importamos o PrismaModule para acessar o PrismaService
+    PrismaModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'minha-chave-secreta',
       signOptions: { expiresIn: '1h' },
@@ -17,6 +18,6 @@ import { JwtStrategy } from './jwt.strategy';
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
-  exports: [AuthService, JwtModule], // ✅ Exportamos o `JwtModule` para outros módulos usarem
+  exports: [AuthService, JwtModule],
 })
 export class AuthModule {}
