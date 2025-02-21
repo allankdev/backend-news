@@ -9,8 +9,17 @@ async function bootstrap() {
   app.setGlobalPrefix("api");
 
   // 🔥 Habilita CORS para permitir comunicação com o frontend
+  const allowedOrigins = [
+    process.env.FRONTEND_URL || 'http://localhost:4000',
+  ];
+
+  // Se existir um domínio temporário da Vercel, adiciona na lista
+  if (process.env.FRONTEND_TEMPORARY_URL) {
+    allowedOrigins.push(process.env.FRONTEND_TEMPORARY_URL);
+  }
+
   app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:4000',
+    origin: allowedOrigins,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
